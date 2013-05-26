@@ -1,4 +1,4 @@
-## Backbone API: iTunes
+# Backbone API: iTunes
 
 Backbone.js helper for API requests to the iTunes service
 
@@ -13,7 +13,7 @@ bower install backbone.api.itunes
 
 ## Credits
 
-Created by Makis Tracend ( (@tracend)[http://github.com/tracend] )
+Created by Makis Tracend ( [@tracend](http://github.com/tracend) )
 
 ### Trivia
 
