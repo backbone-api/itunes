@@ -12,9 +12,9 @@
 	if( _.isUndefined(Backbone.API) ) Backbone.API = {};
 	//APP = window.APP || (APP = { Models: {}, Collections: {}, Views: {} });
 	// support the APP namespace (if available)
-	var Model = APP.Model || Backbone.Model;
-	var View = APP.View || Backbone.View;
-	var Collection = APP.Collection || Backbone.Collection;
+	var Model = (typeof APP != "undefined") ? APP.Model : Backbone.Model;
+	var View = (typeof APP != "undefined") ? APP.View : Backbone.View;
+	var Collection = (typeof APP != "undefined") ? APP.Collection : Backbone.Collection;
 
 
 	// main request method
@@ -24,9 +24,8 @@
 
 	// namespace
 	Backbone.API.iTunes.Models = {};
-	Backbone.API.iTunes.Collection = {};
+	Backbone.API.iTunes.Collections = {};
 	Backbone.API.iTunes.Views = {};
-
 
 	// **Models**: ...
 
@@ -52,38 +51,42 @@
 			entity: false,
 			country: false
 		},
-		url: function(){ return "https://itunes.apple.com/search?term="+ this.options.term
-							+ ( this.options.limit ) ? "&limit="+ this.options.term : ""
-							+ ( this.options.entity ) ? "&entity="+ this.options.entity : ""
-							+ ( this.options.country ) ? "&country="+ this.options.country : ""
+		url: function(){ var url = "https://itunes.apple.com/search?term="+ this.options.term;
+							url += ( this.options.limit ) ? "&limit="+ this.options.term : "";
+							url += ( this.options.entity ) ? "&entity="+ this.options.entity : "";
+							url += ( this.options.country ) ? "&country="+ this.options.country : "";
+							url += "&callback=?"; // JSONP
+						return url;
 					},
 		initialize: function(){
 			// call cache on every state change
 
 		},
 		parse: function( data ){
-			console.log(data);
-			return (data.tips) ? data.tips.items : data;
+			return (data.results) ? data.results : data;
 		}
 	});
 
 	Backbone.API.iTunes.Collections.Lookup = Collection.extend({
 		model: Backbone.API.iTunes.Models.Item,
 		options: {
+			id: false,
 			limit: false,
 			entity: false,
 			country: false
 		},
-		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id")
-							+ ( this.options.limit ) ? "&limit="+ this.options.term : ""
-							+ ( this.options.entity ) ? "&entity="+ this.options.entity : ""
-							+ ( this.options.country ) ? "&country="+ this.options.country : ""
+		url: function(){ var url = "https://itunes.apple.com/lookup?id="+ this.options.id;
+							url += ( this.options.limit ) ? "&limit="+ this.options.limit : "";
+							url += ( this.options.entity ) ? "&entity="+ this.options.entity : "";
+							url += ( this.options.country ) ? "&country="+ this.options.country : "";
+							url += "&callback=?"; // JSONP
+						return url;
 					},
-		initialize: function(){
+		initialize: function( models, options ){
 			// call cache on every state change
 		},
 		parse: function( data ){
-			return (data.friends) ? data.friends.items : data;
+			return (data.results) ? data.results : data;
 		}
 	});
 
