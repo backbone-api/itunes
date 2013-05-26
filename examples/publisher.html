@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.4/handlebars.min.js"></script>
+
+	<script type="text/javascript" src="../backbone.api.itunes.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+<style>
+	article {
+		clear: both;
+	}
+	article img {
+		float: left;
+		padding: 0 8px;
+	}
+</style>
+</head>
+<body>
+
+<p>A simple example, showing off the applications of a single publisher - in this case <a href="http://kdi.co">K&D Interactive</a></p>
+
+<div class="items"></div>
+
+<script id="items-template" type="text/x-handlebars-template">
+{{#each . }}
+	<article style="clear: both">
+		<img src="{{artworkUrl60}}">
+		<h3><a href="{{artistViewUrl}}">{{trackCensoredName}}</a></h3>
+		<p>{{description}}</p>
+	</article>
+{{/each}}
+</script>
+
+<script type="text/javascript">
+	// Initialization ( in app.js... )
+	init( new MyApps() );
+</script>
+
+</body>
+</html>
