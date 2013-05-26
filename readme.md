@@ -10,6 +10,24 @@ Using Bower:
 bower install backbone.api.itunes
 ```
 
+## Usage
+
+The namespace used for this extension is ```Backbone.API.iTunes```, and everything lives under that
+````
+Backbone.API.iTunes
+				|
+				 - Models
+					|
+					 -.Item
+				|
+				 - Collections
+					|
+					 -.Search
+					 -.Lookup
+
+````
+
+Optionally, the namespace is mapped to the global ```iTunes```, in which case the ```Backbone.API.``` prefix can be left out.
 
 ## Credits
 
