@@ -1,0 +1,6 @@
+{
+  "name": "backbone.api.itunes",
+  "version": "0.1.0",
+  "main": ["./backbone.api.itunes.js"],
+  "dependencies": { "backbone", "underscore" }
+}
