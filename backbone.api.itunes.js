@@ -31,7 +31,7 @@
 
 	Backbone.API.iTunes.Models.Item = Model.extend({
 		defaults: { },
-		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id") },
+		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id") +"&callback=?"; },
 		initialize: function(){
 			// call cache on every state change
 		},
