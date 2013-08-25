@@ -8,9 +8,6 @@
 
 (function(_, Backbone) {
 
-	// Fallbacks
-	if( _.isUndefined(Backbone.API) ) Backbone.API = {};
-	//APP = window.APP || (APP = { Models: {}, Collections: {}, Views: {} });
 	// support the APP namespace (if available)
 	var Model = (typeof APP != "undefined") ? APP.Model : Backbone.Model;
 	var View = (typeof APP != "undefined") ? APP.View : Backbone.View;
@@ -18,18 +15,18 @@
 
 
 	// main request method
-	Backbone.API.iTunes = Collection.extend({
+	var iTunes = new Backbone.Model({
 
 	});
 
 	// namespace
-	Backbone.API.iTunes.Models = {};
-	Backbone.API.iTunes.Collections = {};
-	Backbone.API.iTunes.Views = {};
+	iTunes.Models = {};
+	iTunes.Collections = {};
+	iTunes.Views = {};
 
 	// **Models**: ...
 
-	Backbone.API.iTunes.Models.Item = Model.extend({
+	iTunes.Models.Item = Model.extend({
 		defaults: { },
 		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id") +"&callback=?"; },
 		initialize: function(){
@@ -43,8 +40,8 @@
 
 	// **Collections**: ...
 
-	Backbone.API.iTunes.Collections.Search = Collection.extend({
-		model: Backbone.API.iTunes.Models.Item,
+	iTunes.Collections.Search = Collection.extend({
+		model: iTunes.Models.Item,
 		options: {
 			term: "",
 			limit: false,
@@ -67,8 +64,8 @@
 		}
 	});
 
-	Backbone.API.iTunes.Collections.Lookup = Collection.extend({
-		model: Backbone.API.iTunes.Models.Item,
+	iTunes.Collections.Lookup = Collection.extend({
+		model: iTunes.Models.Item,
 		options: {
 			id: false,
 			limit: false,
@@ -90,10 +87,20 @@
 		}
 	});
 
+	// Store in selected namespace(s)
+	if( _.isUndefined(Backbone.API) ) Backbone.API = {};
+	Backbone.API.iTunes = iTunes;
 
-// Shortcut
-if(typeof window.iTunes == "undefined"){
-	window.iTunes = Backbone.API.iTunes;
-}
+	// alias APP.API
+	if( typeof APP != "undefined" && (_.isUndefined( APP.API) || _.isUndefined( APP.API.iTunes) ) ){
+		APP.API = APP.API || {};
+		APP.API.iTunes = Backbone.API.iTunes;
+	}
+
+	// Shortcut
+	if(typeof window.iTunes == "undefined"){
+		window.iTunes = iTunes;
+	}
+
 
 })(this._, this.Backbone);
