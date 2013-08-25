@@ -8,6 +8,8 @@
 
 (function(_, Backbone) {
 
+	// Reference: https://www.apple.com/itunes/affiliates/resources/documentation/itunes-store-web-service-search-api.html
+
 	// support the APP namespace (if available)
 	var Model = ( typeof APP != "undefined" && !_.isUndefined( APP.Model) ) ? APP.Model : Backbone.Model;
 	var View = (typeof APP != "undefined" && !_.isUndefined( APP.View) ) ? APP.View : Backbone.View;
