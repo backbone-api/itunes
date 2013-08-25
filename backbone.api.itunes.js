@@ -9,9 +9,9 @@
 (function(_, Backbone) {
 
 	// support the APP namespace (if available)
-	var Model = (typeof APP != "undefined") ? APP.Model : Backbone.Model;
-	var View = (typeof APP != "undefined") ? APP.View : Backbone.View;
-	var Collection = (typeof APP != "undefined") ? APP.Collection : Backbone.Collection;
+	var Model = ( typeof APP != "undefined" && !_.isUndefined( APP.Model) ) ? APP.Model : Backbone.Model;
+	var View = (typeof APP != "undefined" && !_.isUndefined( APP.View) ) ? APP.View : Backbone.View;
+	var Collection = (typeof APP != "undefined" && !_.isUndefined( APP.Collection) ) ? APP.Collection : Backbone.Collection;
 
 
 	// main request method
