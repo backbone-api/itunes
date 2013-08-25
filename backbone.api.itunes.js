@@ -24,11 +24,33 @@
 	iTunes.Collections = {};
 	iTunes.Views = {};
 
-	// **Models**: ...
+	// JSONP requests for all direct API requests
+	iTunes.Model = Model.extend({
 
-	iTunes.Models.Item = Model.extend({
+		sync : function( method, model, options ) {
+
+			options.dataType = 'jsonp';
+
+			return Backbone.sync( method, model, options );
+
+		}
+	});
+
+	iTunes.Collection = Collection.extend({
+
+		sync : function( method, model, options ) {
+
+			options.dataType = 'jsonp';
+
+			return Backbone.sync( method, model, options );
+
+		}
+	});
+
+	// **Models**: ...
+	iTunes.Models.Item = iTunes.Model.extend({
 		defaults: { },
-		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id") +"&callback=?"; },
+		url: function(){ return "https://itunes.apple.com/lookup?id="+ this.get("id"); },
 		initialize: function(){
 			// call cache on every state change
 		},
@@ -40,7 +62,7 @@
 
 	// **Collections**: ...
 
-	iTunes.Collections.Search = Collection.extend({
+	iTunes.Collections.Search = iTunes.Collection.extend({
 		model: iTunes.Models.Item,
 		options: {
 			term: "",
@@ -52,7 +74,6 @@
 							url += ( this.options.limit ) ? "&limit="+ this.options.term : "";
 							url += ( this.options.entity ) ? "&entity="+ this.options.entity : "";
 							url += ( this.options.country ) ? "&country="+ this.options.country : "";
-							url += "&callback=?"; // JSONP
 						return url;
 					},
 		initialize: function(){
@@ -64,7 +85,7 @@
 		}
 	});
 
-	iTunes.Collections.Lookup = Collection.extend({
+	iTunes.Collections.Lookup = iTunes.Collection.extend({
 		model: iTunes.Models.Item,
 		options: {
 			id: false,
@@ -76,7 +97,6 @@
 							url += ( this.options.limit ) ? "&limit="+ this.options.limit : "";
 							url += ( this.options.entity ) ? "&entity="+ this.options.entity : "";
 							url += ( this.options.country ) ? "&country="+ this.options.country : "";
-							url += "&callback=?"; // JSONP
 						return url;
 					},
 		initialize: function( models, options ){
